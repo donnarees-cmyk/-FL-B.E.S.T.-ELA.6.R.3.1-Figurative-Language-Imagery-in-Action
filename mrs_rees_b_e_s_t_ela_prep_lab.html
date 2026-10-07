@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mrs. Rees' B.E.S.T. ELA Prep Lab: Figurative Language & Imagery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-cream: #faf6f0;
+      --bg-card: #ffffff;
+      --navy-primary: #1e293b;
+      --navy-dark: #0f172a;
+      --terracotta: #c25e00;
+      --terracotta-light: #fff2e6;
+      --amber-accent: #d97706;
+      --amber-light: #fef3c7;
+      --teal-accent: #0d9488;
+      --teal-light: #ccfbf1;
+      --border-soft: #e2e8f0;
+    }
+
+    body {
+      background-color: #f4efe6;
+      color: #1e293b;
+      font-family: 'Lexend', sans-serif;
+    }
+
+    .font-serif-title {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .poem-line {
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .poem-line:hover {
+      background-color: var(--terracotta-light);
+      border-left-color: var(--terracotta);
+    }
+
+    .poem-line.active {
+      background-color: #fef3c7;
+      border-left-color: var(--amber-accent);
+      font-weight: 600;
+    }
+
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: #f8fafc;
+      border-color: #0284c7;
+    }
+
+    .option-btn.correct {
+      background-color: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      color: #065f46 !important;
+    }
+
+    .option-btn.incorrect {
+      background-color: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #991b1b !important;
+    }
+
+    .custom-shadow {
+      box-shadow: 0 10px 25px -5px rgba(30, 41, 59, 0.08), 0 8px 10px -6px rgba(30, 41, 59, 0.04);
+    }
+  </style>
+</head>
+<body class="p-3 sm:p-6 md:p-8 min-h-screen">
+
+  <header class="max-w-7xl mx-auto bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 text-white p-6 md:p-8 rounded-3xl mb-8 custom-shadow border border-amber-500/20 relative overflow-hidden">
+    <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
+      <div>
+        <div class="flex flex-wrap items-center gap-2 mb-3">
+          <span class="bg-amber-500 text-slate-950 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
+            Mrs. Rees' Classroom
+          </span>
+          <span class="bg-white/10 backdrop-blur-md text-amber-200 text-xs font-bold px-3 py-1 rounded-full border border-white/20">
+            FL B.E.S.T. ELA.6.R.3.1
+          </span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold font-serif-title tracking-tight text-amber-100">
+          Figurative Language & Imagery in Action
+        </h1>
+        <p class="text-slate-300 text-xs sm:text-sm md:text-base mt-2 max-w-2xl leading-relaxed">
+          Welcome readers! Today we'll explore how poets use metaphors, similes, personification, and sensory imagery to build vivid moods and deeper meaning.
+        </p>
+      </div>
+
+      <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/15 text-left w-full md:w-auto min-w-[220px]">
+        <div class="text-xs text-amber-300 font-bold uppercase tracking-wider">Today's Goal</div>
+        <div class="text-sm font-semibold text-white mt-1">Analyze how figurative words create tone & mood</div>
+        <button onclick="openPrintModal()" class="mt-3 w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs py-2 px-3 rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+          <span>📄</span> Printable Exit Ticket
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <div class="lg:col-span-7 flex flex-col gap-8">
+      
+      <!-- Interactive Visual Canvas Engine -->
+      <section class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 custom-shadow">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🌅</span>
+            <h2 class="text-lg font-bold text-slate-800">Sensory Imagery & Mood Lens</h2>
+          </div>
+          <span id="sceneTag" class="text-xs font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full">
+            State: Calm Sunset
+          </span>
+        </div>
+
+        <div class="relative w-full bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-inner">
+          <canvas id="stormCanvas" width="650" height="280" class="w-full h-auto block"></canvas>
+        </div>
+
+        <!-- Slider Scrub Control -->
+        <div class="mt-5 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div class="flex justify-between items-center mb-2">
+            <label for="imagerySlider" class="text-xs font-bold text-slate-700 uppercase tracking-wider">
+              Scrub Intensity (Calm Metaphor ↔ Fierce Storm Personification)
+            </label>
+            <span id="intensityVal" class="text-xs font-extrabold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">0% - Peaceful Lake</span>
+          </div>
+          <input type="range" id="imagerySlider" min="0" max="100" value="0" oninput="updateScene(this.value)" class="w-full accent-amber-600 cursor-pointer">
+          
+          <div class="grid grid-cols-3 text-[11px] text-slate-500 font-semibold mt-2 text-center">
+            <span>"Glass Mirror" (Calm)</span>
+            <span>"Whispering Reeds" (Transitional)</span>
+            <span>"Roaring Beast" (Storm)</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Human Authored Poem Reader with Clickable Insights -->
+      <section class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 custom-shadow">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-3 mb-4">
+          <span class="text-2xl">📜</span>
+          <div>
+            <h2 class="text-lg font-bold text-slate-800 font-serif-title">Poem: "The Storm Over Lake Okeechobee"</h2>
+            <p class="text-xs text-slate-500">By Mrs. Rees • Click any highlighted line to hear my teaching analysis!</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Stanzas -->
+          <div class="space-y-3 text-sm text-slate-700 leading-relaxed font-serif-title">
+            <div class="bg-amber-50/50 p-3 rounded-2xl border border-amber-100/60">
+              <p class="poem-line" onclick="showInsight(0)">The lake was a mirror, serene and still,</p>
+              <p class="poem-line" onclick="showInsight(1)">Reflecting the gold on the pine-covered hill.</p>
+              <p class="poem-line" onclick="showInsight(2)">The quiet wind whispered a secret so low,</p>
+              <p class="poem-line" onclick="showInsight(3)">Like butter smooth sunbeams that melted below.</p>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200/60">
+              <p class="poem-line" onclick="showInsight(4)">Then dark clouds charged in like wild horses at war,</p>
+              <p class="poem-line" onclick="showInsight(5)">And thunder growled loud with a terrible roar!</p>
+              <p class="poem-line" onclick="showInsight(6)">Rain lashed at the palm trees with millions of spears,</p>
+              <p class="poem-line" onclick="showInsight(7)">Until the sky wept all its stormy blue tears.</p>
+            </div>
+          </div>
+
+          <!-- Mrs. Rees Coaching Callout Box -->
+          <div id="insightCard" class="bg-amber-50 border-2 border-amber-200 p-4 rounded-2xl flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 text-amber-900 font-bold text-xs uppercase tracking-wider mb-2">
+                <span>💡</span> Mrs. Rees' Teacher Insight
+              </div>
+              <h3 id="insightTitle" class="font-bold text-slate-900 text-sm mb-2">Click a line to explore!</h3>
+              <p id="insightBody" class="text-xs text-slate-600 leading-relaxed">
+                Click any line in the poem on the left to see how the author used figurative devices to craft specific sensory details and change the mood!
+              </p>
+            </div>
+            <div id="insightTag" class="mt-4 pt-3 border-t border-amber-200/60 text-[11px] font-semibold text-amber-800 hidden">
+              Device Target: <span id="deviceType">---</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="lg:col-span-5 flex flex-col gap-8">
+
+      <!-- Anchor Chart Matrix -->
+      <section class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 custom-shadow">
+        <div class="flex items-center gap-3 border-b border-slate-100 pb-3 mb-4">
+          <span class="text-2xl">📌</span>
+          <h2 class="text-lg font-bold text-slate-800">Figurative Language Matrix</h2>
+        </div>
+
+        <div class="space-y-3">
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+            <span class="font-bold text-amber-800 block mb-0.5">Metaphor (Direct Comparison)</span>
+            <p class="text-slate-600">Compares two unlike things directly WITHOUT using 'like' or 'as'.</p>
+            <p class="text-slate-500 italic mt-1">Ex: "The lake was a mirror..."</p>
+          </div>
+
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+            <span class="font-bold text-teal-800 block mb-0.5">Simile (Comparison with 'Like' or 'As')</span>
+            <p class="text-slate-600">Compares two unlike things using 'like' or 'as'.</p>
+            <p class="text-slate-500 italic mt-1">Ex: "Clouds charged in like wild horses..."</p>
+          </div>
+
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+            <span class="font-bold text-rose-800 block mb-0.5">Personification (Human Traits to Non-Human)</span>
+            <p class="text-slate-600">Gives human feelings, actions, or abilities to objects/nature.</p>
+            <p class="text-slate-500 italic mt-1">Ex: "The quiet wind whispered a secret..."</p>
+          </div>
+
+          <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 text-xs">
+            <span class="font-bold text-purple-800 block mb-0.5">Hyperbole (Extreme Exaggeration)</span>
+            <p class="text-slate-600">Exaggerates heavily for emphasis or dramatic effect.</p>
+            <p class="text-slate-500 italic mt-1">Ex: "Rain lashed with millions of spears..."</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Florida B.E.S.T. State Assessment Practice Component -->
+      <section class="bg-white border border-slate-200 rounded-3xl p-5 md:p-6 custom-shadow flex-1 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-center bg-slate-900 text-white p-3 rounded-2xl mb-4">
+            <span class="font-bold text-xs sm:text-sm flex items-center gap-2">
+              <span>🎯</span> B.E.S.T. Assessment Prep
+            </span>
+            <span id="scoreDisplay" class="bg-amber-500 text-slate-950 font-extrabold px-3 py-1 rounded-full text-xs">
+              Score: 0 / 8
+            </span>
+          </div>
+
+          <div id="quizContainer">
+            <!-- Dynamic question injection -->
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center gap-3 mt-6 pt-3 border-t border-slate-100">
+          <button id="prevBtn" onclick="navigateQuiz(-1)" class="bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs transition-all" disabled>
+            Previous
+          </button>
+          <span id="quizProgress" class="text-xs text-slate-500 font-semibold">Question 1 of 8</span>
+          <button id="nextBtn" onclick="navigateQuiz(1)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition-all">
+            Next Question
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <div id="printModal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto border border-slate-200">
+      <div class="flex justify-between items-start border-b border-slate-200 pb-4 mb-4">
+        <div>
+          <span class="text-xs font-extrabold text-amber-700 uppercase">Printable Companion Preview</span>
+          <h3 class="text-xl font-bold font-serif-title text-slate-900">Student Exit Ticket & Note Sheet</h3>
+        </div>
+        <button onclick="closePrintModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold">&times;</button>
+      </div>
+
+      <div class="border-2 border-dashed border-slate-300 p-6 rounded-2xl bg-slate-50 space-y-4 font-serif-title text-slate-800 text-xs sm:text-sm">
+        <div class="flex justify-between border-b pb-2">
+          <span>Name: _______________________</span>
+          <span>Date: ____________</span>
+          <span>Period: ____</span>
+        </div>
+
+        <div>
+          <strong class="block mb-1 text-amber-900 font-sans text-xs uppercase">1. Figurative Identification:</strong>
+          <p>Read Line 5 from the poem: <em>"Clouds charged in like wild horses at war..."</em></p>
+          <p class="mt-1">Identify the device and explain what two things are being compared:</p>
+          <div class="h-12 border-b border-slate-300 mt-1"></div>
+        </div>
+
+        <div>
+          <strong class="block mb-1 text-amber-900 font-sans text-xs uppercase">2. Mood Analysis:</strong>
+          <p>How does the author's use of personification in line 3 (<em>"wind whispered a secret"</em>) contrast with line 6 (<em>"thunder growled loud"</em>)?</p>
+          <div class="h-16 border-b border-slate-300 mt-1"></div>
+        </div>
+
+        <div>
+          <strong class="block mb-1 text-amber-900 font-sans text-xs uppercase">3. Teacher Check Stamp:</strong>
+          <div class="flex justify-between items-center mt-2 font-sans text-xs">
+            <span class="border px-4 py-2 rounded-lg bg-white">Mastery (3/3)</span>
+            <span class="border px-4 py-2 rounded-lg bg-white">Developing (2/3)</span>
+            <span class="border px-4 py-2 rounded-lg bg-white">Needs Review (0-1/3)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-3 font-sans">
+        <button onclick="closePrintModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-4 py-2 rounded-xl text-xs">
+          Close Preview
+        </button>
+        <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2 rounded-xl text-xs">
+          Print Now 🖨️
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('stormCanvas');
+    const ctx = canvas.getContext('2d');
+    let sliderVal = 0;
+
+    function drawScene() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const ratio = sliderVal / 100;
+
+      // Sky Gradient
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      if (ratio < 0.5) {
+        // Calm sunset
+        skyGrad.addColorStop(0, '#f97316');
+        skyGrad.addColorStop(0.5, '#fbbf24');
+        skyGrad.addColorStop(1, '#38bdf8');
+      } else {
+        // Stormy skies
+        skyGrad.addColorStop(0, '#0f172a');
+        skyGrad.addColorStop(0.5, '#334155');
+        skyGrad.addColorStop(1, '#1e293b');
+      }
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Sun / Lightning
+      if (ratio < 0.5) {
+        ctx.beginPath();
+        ctx.arc(520, 100, 35, 0, Math.PI * 2);
+        ctx.fillStyle = '#fef08a';
+        ctx.fill();
+      } else {
+        // Draw lightning bolt
+        ctx.beginPath();
+        ctx.moveTo(480, 20);
+        ctx.lineTo(450, 90);
+        ctx.lineTo(470, 95);
+        ctx.lineTo(430, 160);
+        ctx.strokeStyle = '#fef08a';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+      }
+
+      // Water body
+      const waterGrad = ctx.createLinearGradient(0, 180, 0, canvas.height);
+      if (ratio < 0.5) {
+        waterGrad.addColorStop(0, '#38bdf8');
+        waterGrad.addColorStop(1, '#0284c7');
+      } else {
+        waterGrad.addColorStop(0, '#1e293b');
+        waterGrad.addColorStop(1, '#0f172a');
+      }
+      ctx.fillStyle = waterGrad;
+      ctx.fillRect(0, 180, canvas.width, 100);
+
+      // Waves / Reflection
+      ctx.strokeStyle = ratio < 0.5 ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.7)';
+      ctx.lineWidth = 2;
+      const waveFreq = ratio < 0.5 ? 6 : 18;
+      for (let i = 0; i < canvas.width; i += 30) {
+        ctx.beginPath();
+        ctx.moveTo(i, 210);
+        ctx.lineTo(i + 15, 210 + (Math.sin(i + ratio * 10) * waveFreq));
+        ctx.stroke();
+      }
+
+      // Text Overlay on Canvas
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 13px Lexend';
+      ctx.shadowColor = 'rgba(0,0,0,0.8)';
+      ctx.shadowBlur = 4;
+      
+      if (ratio < 0.5) {
+        ctx.fillText('"The lake was a mirror..." (Metaphor)', 20, 40);
+        ctx.fillText('Mood: Peaceful & Serene', 20, 60);
+      } else {
+        ctx.fillText('"Clouds charged in like wild horses..." (Simile)', 20, 40);
+        ctx.fillText('Mood: Threatening & Chaotic', 20, 60);
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    function updateScene(val) {
+      sliderVal = val;
+      const tag = document.getElementById('sceneTag');
+      const label = document.getElementById('intensityVal');
+
+      if (val < 33) {
+        tag.innerText = "State: Calm Sunset";
+        tag.className = "text-xs font-bold bg-amber-100 text-amber-800 px-3 py-1 rounded-full";
+        label.innerText = `${val}% - Peaceful Lake`;
+      } else if (val < 66) {
+        tag.innerText = "State: Approaching Storm";
+        tag.className = "text-xs font-bold bg-teal-100 text-teal-800 px-3 py-1 rounded-full";
+        label.innerText = `${val}% - Wind & Clouds Building`;
+      } else {
+        tag.innerText = "State: Full Storm";
+        tag.className = "text-xs font-bold bg-rose-100 text-rose-800 px-3 py-1 rounded-full";
+        label.innerText = `${val}% - Fierce Tempest`;
+      }
+
+      drawScene();
+    }
+
+    const poemInsights = [
+      {
+        title: "Line 1: 'The lake was a mirror, serene and still'",
+        body: "Notice how the poet compares the lake directly to a mirror without using 'like' or 'as'. This metaphor emphasizes how smooth, clear, and unruffled the water is, setting a peaceful mood.",
+        device: "Metaphor"
+      },
+      {
+        title: "Line 2: 'Reflecting the gold on the pine-covered hill'",
+        body: "Visual imagery! The word 'gold' creates vivid sensory details in our mind, painting a warm sunset picture before the storm arrives.",
+        device: "Sensory Imagery (Visual)"
+      },
+      {
+        title: "Line 3: 'The quiet wind whispered a secret so low'",
+        body: "This is Personification! Winds can't actually whisper secrets like humans do. Giving the wind human traits makes nature feel gentle and friendly in this stanza.",
+        device: "Personification"
+      },
+      {
+        title: "Line 4: 'Like butter smooth sunbeams that melted below'",
+        body: "This Simile uses the word 'like' to compare sunlight to soft, melting butter. It builds a comforting, warm feeling for the reader.",
+        device: "Simile"
+      },
+      {
+        title: "Line 5: 'Then dark clouds charged in like wild horses at war'",
+        body: "Look at the shift! The simile comparing storm clouds to 'wild horses at war' suddenly shifts the poem's mood from peaceful to wild, aggressive, and fast-moving.",
+        device: "Simile"
+      },
+      {
+        title: "Line 6: 'And thunder growled loud with a terrible roar!'",
+        body: "Personification again! Thunder is given the human/animal ability to growl angrily. This sensory auditory detail creates an ominous, scary feeling.",
+        device: "Personification"
+      },
+      {
+        title: "Line 7: 'Rain lashed at the palm trees with millions of spears'",
+        body: "This Hyperbole (extreme exaggeration) describes raindrops as 'millions of spears' to help us feel how hard and sharp the storm rain is hitting the trees.",
+        device: "Hyperbole"
+      },
+      {
+        title: "Line 8: 'Until the sky wept all its stormy blue tears'",
+        body: "The sky 'weeping tears' personifies nature as a person crying out rain. It concludes the tempest with a dramatic emotional release.",
+        device: "Personification"
+      }
+    ];
+
+    function showInsight(idx) {
+      const data = poemInsights[idx];
+      document.getElementById('insightTitle').innerText = data.title;
+      document.getElementById('insightBody').innerText = data.body;
+      document.getElementById('deviceType').innerText = data.device;
+      document.getElementById('insightTag').classList.remove('hidden');
+
+      const lines = document.querySelectorAll('.poem-line');
+      lines.forEach((l, i) => {
+        if (i === idx) l.classList.add('active');
+        else l.classList.remove('active');
+      });
+    }
+
+    const quizData = [
+      {
+        id: 1,
+        question: "In Line 1, how does the metaphor 'The lake was a mirror' impact the mood of the first stanza?",
+        options: [
+          "A. It creates a chaotic and threatening mood.",
+          "B. It establishes a calm, tranquil, and peaceful mood.",
+          "C. It suggests that the water is dangerous to swim in.",
+          "D. It makes the reader feel anxious about what is coming next."
+        ],
+        correct: 1,
+        rationale: "Spot on! By directly comparing the smooth, still lake to a mirror, the poet creates a serene, quiet setting right before the storm."
+      },
+      {
+        id: 2,
+        question: "This question has two parts. First, answer Part A. Then, answer Part B.\n\nPart A: What literary device is used in Line 5 ('dark clouds charged in like wild horses at war')?",
+        options: [
+          "A. Personification",
+          "B. Simile",
+          "C. Hyperbole",
+          "D. Metaphor"
+        ],
+        correct: 1,
+        rationale: "Spot on! The phrase uses the word 'like' to compare the fast-moving storm clouds to charging wild horses, making it a simile."
+      },
+      {
+        id: 3,
+        question: "Part B: What effect does the simile in Part A have on the poem's tone?",
+        options: [
+          "A. It shifts the tone from peaceful to urgent, energetic, and aggressive.",
+          "B. It makes the storm seem funny and playful.",
+          "C. It shows that the horses on the farm are frightened.",
+          "D. It keeps the tone identical to the quiet opening lines."
+        ],
+        correct: 0,
+        rationale: "Spot on! Comparing clouds to 'horses at war' creates a dramatic turning point, replacing calm with tension and excitement."
+      },
+      {
+        id: 4,
+        question: "How does giving the wind the human action of 'whispering a secret' (Line 3) affect the reader's understanding?",
+        options: [
+          "A. It makes the wind seem violent and destructive.",
+          "B. It helps the reader imagine a gentle, soft breeze touching the lake.",
+          "C. It proves that there are hidden people speaking near the water.",
+          "D. It exaggerates the loudness of the weather."
+        ],
+        correct: 1,
+        rationale: "Spot on! Personifying the wind as 'whispering' appeals to our sense of hearing and conveys a quiet, gentle atmosphere."
+      },
+      {
+        id: 5,
+        question: "Which line from the poem contains an example of HYPERBOLE (extreme exaggeration)?",
+        options: [
+          "A. 'The quiet wind whispered a secret so low'",
+          "B. 'Rain lashed at the palm trees with millions of spears'",
+          "C. 'Reflecting the gold on the pine-covered hill'",
+          "D. 'The lake was a mirror, serene and still'"
+        ],
+        correct: 1,
+        rationale: "Spot on! Describing raindrops as 'millions of spears' exaggerates their sharp, pounding force for dramatic imagery."
+      },
+      {
+        id: 6,
+        question: "Read Line 6: 'And thunder growled loud with a terrible roar!'\n\nWhich sensory detail is the poet appealing to in this line?",
+        options: [
+          "A. Sense of touch",
+          "B. Sense of hearing (Auditory)",
+          "C. Sense of taste",
+          "D. Sense of smell"
+        ],
+        correct: 1,
+        rationale: "Spot on! Words like 'growled' and 'terrible roar' appeal directly to the reader's sense of hearing to build suspense."
+      },
+      {
+        id: 7,
+        question: "What overall contrast does the author build between Stanza 1 and Stanza 2?",
+        options: [
+          "A. Stanza 1 takes place in winter, while Stanza 2 takes place in summer.",
+          "B. Stanza 1 focuses on peaceful nature, while Stanza 2 focuses on a sudden, powerful storm.",
+          "C. Stanza 1 describes city life, while Stanza 2 describes rural farms.",
+          "D. Stanza 1 uses only personification, while Stanza 2 uses no figurative language."
+        ],
+        correct: 1,
+        rationale: "Spot on! The poem shifts dramatically from quiet, golden serenity in Stanza 1 to wild, roaring storm action in Stanza 2."
+      },
+      {
+        id: 8,
+        question: "Why did the poet personify the sky as 'weeping stormy blue tears' in Line 8?",
+        options: [
+          "A. To show that the rain was finally falling heavily to conclude the storm.",
+          "B. To explain that the clouds were feeling genuinely sad.",
+          "C. To suggest that the lake was overflowing into the ocean.",
+          "D. To convince the reader to stay indoors during winter."
+        ],
+        correct: 0,
+        rationale: "Spot on! Comparing heavy falling rain to 'weeping tears' brings the storm to its emotional and visual climax."
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let userAnswers = new Array(quizData.length).fill(null);
+
+    function renderQuestion(idx) {
+      const q = quizData[idx];
+      const container = document.getElementById('quizContainer');
+      
+      let optionsHTML = q.options.map((opt, oIdx) => {
+        let btnClass = 'option-btn w-full text-left bg-slate-50 border border-slate-200 p-3 rounded-2xl text-xs md:text-sm text-slate-800 font-medium';
+        if (userAnswers[idx] !== null) {
+          if (oIdx === q.correct) btnClass += ' correct';
+          else if (oIdx === userAnswers[idx]) btnClass += ' incorrect';
+        }
+        return `<button class="${btnClass}" onclick="selectAnswer(${idx}, ${oIdx})" ${userAnswers[idx] !== null ? 'disabled' : ''}>${opt}</button>`;
+      }).join('');
+
+      let rationaleHTML = '';
+      if (userAnswers[idx] !== null) {
+        const isCorrect = userAnswers[idx] === q.correct;
+        const boxStyle = isCorrect ? 'bg-emerald-50 border-emerald-300 text-emerald-900' : 'bg-rose-50 border-rose-300 text-rose-900';
+        const prefix = isCorrect ? '🌟 Mrs. Rees says: ' : '💡 Mrs. Rees says: Close call! ';
+        rationaleHTML = `
+          <div class="mt-4 p-3.5 rounded-2xl border text-xs leading-relaxed ${boxStyle}">
+            <strong>${prefix}</strong>${q.rationale}
+          </div>
+        `;
+      }
+
+      container.innerHTML = `
+        <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-4">
+          <div class="text-xs md:text-sm font-semibold text-slate-900 mb-3 leading-snug">${q.question.replace(/\n/g, '<br>')}</div>
+          <div class="space-y-2">${optionsHTML}</div>
+          ${rationaleHTML}
+        </div>
+      `;
+
+      document.getElementById('prevBtn').disabled = idx === 0;
+      document.getElementById('nextBtn').disabled = idx === quizData.length - 1;
+      document.getElementById('quizProgress').innerText = `Question ${idx + 1} of ${quizData.length}`;
+      updateScoreDisplay();
+    }
+
+    function selectAnswer(qIdx, oIdx) {
+      userAnswers[qIdx] = oIdx;
+      renderQuestion(qIdx);
+    }
+
+    function navigateQuiz(dir) {
+      currentQuestionIdx += dir;
+      renderQuestion(currentQuestionIdx);
+    }
+
+    function updateScoreDisplay() {
+      let score = userAnswers.reduce((acc, ans, idx) => {
+        return ans === quizData[idx].correct ? acc + 1 : acc;
+      }, 0);
+      document.getElementById('scoreDisplay').innerText = `Score: ${score} / ${quizData.length}`;
+    }
+
+    function openPrintModal() {
+      document.getElementById('printModal').classList.remove('hidden');
+    }
+
+    function closePrintModal() {
+      document.getElementById('printModal').classList.add('hidden');
+    }
+
+    window.onload = function() {
+      drawScene();
+      renderQuestion(0);
+      showInsight(0);
+    };
+  </script>
+</body>
+</html>
